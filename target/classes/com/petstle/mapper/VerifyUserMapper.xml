@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petstle.mapper.VerifyUserMapper">
+	<select id="petUser" resultType="String" parameterType="String">
+		SELECT f_usr FROM pet WHERE petid=#{petid}
+	</select>
+	<select id="reqRuser" resultType="String" parameterType="String">
+		SELECT f_rusr FROM request WHERE reqid=#{reqid}
+	</select>
+	<select id="reqSuser" resultType="String" parameterType="String">
+		SELECT f_susr FROM request WHERE reqid=#{reqid}
+	</select>
+	<select id="resSuser" resultType="String" parameterType="String">
+		SELECT f_susr FROM responseWHERE resid=#{resid}
+	</select>
+	<select id="reqResRuser" resultType="String" parameterType="String">
+		SELECT f_rusr FROM request req INNER JOIN response res ON req.reqid = res.f_req WHERE res.resid=#{resid}
+	</select>
+	<select id="repRuser" resultType="String" parameterType="String">
+		SELECT f_rusr FROM report WHERE repid=#{repid}
+	</select>
+	<select id="repSuser" resultType="String" parameterType="String">
+		SELECT f_susr FROM report WHERE repid=#{repid} 
+	</select>
+	<select id="revRuser" resultType="String" parameterType="String">
+		SELECT f_rusr FROM review WHERE revid=#{revid}
+	</select>
+	<select id="revSuser" resultType="String" parameterType="String">
+		SELECT f_susr FROM review WHERE revid=#{revid} 
+	</select>
+</mapper>

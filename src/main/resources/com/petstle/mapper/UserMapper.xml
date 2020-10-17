@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petstle.mapper.UserMapper">
+	<select id="checkUser" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM user WHERE email = #{email}
+	</select>
+	<select id="getUserCipher" resultType="String" parameterType="String">
+		SELECT func_get_user_cipher (#{email})
+	</select>
+	<select id="getUserId" resultType="String" parameterType="String">
+		SELECT func_get_user_id (#{email})
+	</select>
+	
+	<parameterMap id="newusermap" type="String">
+		<parameter property="usrid" mode="OUT" jdbcType="CHAR" javaType="String"/>
+	</parameterMap>
+	<insert id="newUser" statementType="CALLABLE" parameterMap="newusermap">
+		{CALL proc_user_new (?)}
+	</insert>
+	
+	<parameterMap id="updateusermap" type="com.petstle.domain.User">
+		<parameter property="usrid" mode="IN" jdbcType="CHAR" javaType="String"/>
+		<parameter property="email" mode="IN" jdbcType="VARCHAR" javaType="String"/>
+		<parameter property="id" mode="IN" jdbcType="CHAR" javaType="String"/>
+		<parameter property="phone" mode="IN" jdbcType="CHAR" javaType="String"/>
+		<parameter property="f_uds" mode="IN" jdbcType="TINYINT" javaType="int"/>
+		<parameter property="zip" mode="IN" jdbcType="CHAR" javaType="String"/>
+		<parameter property="address1" mode="IN" jdbcType="VARCHAR" javaType="String"/>
+		<parameter property="address2" mode="IN" jdbcType="VARCHAR" javaType="String"/>
+	</parameterMap>
+	<update id="updateUser" statementType="CALLABLE" parameterMap="updateusermap">
+		{CALL proc_user_update (?,?,?,?,?,?,?,?)}
+	</update>
+	
+	<parameterMap id="authusermap" type="com.petstle.domain.User">
+		<parameter property="usrid" mode="IN" jdbcType="CHAR" javaType="String"/>
+		<parameter property="name" mode="IN" jdbcType="VARCHAR" javaType="String"/>
+		<parameter property="gender" mode="IN" jdbcType="CHAR" javaType="String"/>
+		<parameter property="birth" mode="IN" jdbcType="CHAR" javaType="String"/>
+		<parameter property="unique_key" mode="IN" jdbcType="VARCHAR" javaType="String"/>
+		<parameter property="unique_in_site" mode="IN" jdbcType="VARCHAR" javaType="String"/>
+	</parameterMap>
+	<update id="authUser" statementType="CALLABLE" parameterMap="authusermap">
+		{CALL proc_user_set_auth (?,?,?,?,?,?)}
+	</update>
+	
+	<parameterMap id="setusertypemap" type="com.petstle.domain.User">
+		<parameter property="usrid" mode="IN" jdbcType="CHAR" javaType="String"/>
+		<parameter property="f_utp" mode="IN" jdbcType="CHAR" javaType="String"/>
+	</parameterMap>
+	<update id="setUserType" statementType="CALLABLE" parameterType="Map">
+		{CALL proc_user_set_type (?,?)}
+	</update>
+	
+	<update id="setUserPw" statementType="CALLABLE" parameterType="Map">
+		{CALL proc_user_set_pw (#{usrid}, #{pw})}
+	</update>
+	<update id="deleteUser" statementType="CALLABLE" parameterType="String">
+		{CALL prc_user_delete (#{usrid})}
+	</update>
+	
+	<select id="detailUser" resultType="com.petstle.domain.User" parameterType="String">
+		SELECT * FROM view_user_detail WHERE usrid = #{usrid}
+	</select>
+</mapper>

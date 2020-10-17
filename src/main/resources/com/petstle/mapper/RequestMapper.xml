@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petstle.mapper.RequestMapper">
+	<select id="listRequest" resultType="com.petstle.domain.Request">
+		SELECT * FROM view_request
+	</select>
+	<select id="listRequestOnRuser" resultType="com.petstle.domain.Request" parameterType="String">
+		SELECT * FROM view_request WHERE f_susr = #{rusrid}
+	</select>
+	<select id="detailRequest" resultType="com.petstle.domain.Request" parameterType="String">
+		SELECT * FROM view_request WHERE reqid = #{reqid}
+	</select>
+	<select id="listPetOnRequest" resultType="com.petstle.domain.Pet" parameterType="String">
+		SELECT * FROM view_request_pet WHERE reqid = #{reqid}
+	</select>
+	
+	<parameterMap id="newmap" type="com.petstle.domain.Request">
+		<parameter property="rusr" mode="IN" jdbcType="CHAR" javaType="String"/>
+		<parameter property="startday" mode="IN" jdbcType="DATE" javaType="java.sql.Date"/>
+		<parameter property="endday" mode="IN" jdbcType="DATE" javaType="java.sql.Date"/>
+		<parameter property="reqid" mode="OUT" jdbcType="CHAR" javaType="String"/>
+	</parameterMap>
+	<select id="newRequest" statementType="CALLABLE" parameterMap="newmap">
+		{CALL proc_request_new (?,?,?,?)}
+	</select>
+	
+	<parameterMap id="petmap" type="Map">
+		<parameter property="reqid" mode="IN" jdbcType="CHAR" javaType="String"/>
+		<parameter property="petid" mode="IN" jdbcType="CHAR" javaType="String"/>
+	</parameterMap>
+	<insert id="addPetOnRequest" statementType="CALLABLE" parameterMap="petmap">
+		{CALL proc_request_add_pet (?,?)}
+	</insert>
+	
+	<parameterMap id="upmap" type="com.petstle.domain.Request">
+		<parameter property="reqid" mode="IN" jdbcType="CHAR" javaType="String"/>
+		<parameter property="startday" mode="IN" jdbcType="DATE" javaType="java.sql.Date"/>
+		<parameter property="endday" mode="IN" jdbcType="DATE" javaType="java.sql.Date"/>
+		<parameter property="amount" mode="IN" jdbcType="INTEGER" javaType="int"/>
+	</parameterMap>
+	<update id="updateRequest" statementType="CALLABLE" parameterMap="upmap">
+		{CALL proc_request_update (?,?,?,?)}
+	</update>
+	
+	<delete id="deleteRequest" statementType="CALLABLE" parameterType="String">
+		{CALL proc_request_delete (#{reqid)}
+	</delete>
+</mapper>

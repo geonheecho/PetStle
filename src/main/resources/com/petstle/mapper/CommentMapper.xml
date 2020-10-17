@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petstle.mapper.CommentMapper">
+
+<select id="commentCount" resultType="com.petstle.domain.CommentVo" parameterType="Integer">
+	SELECT count(*) from COMMENT
+</select>
+
+
+<select id="CommentList" resultType="com.petstle.domain.CommentVo" parameterType="String" >
+	SELECT * FROM COMMENT WHERE c_repid = #{c_repid} ORDER BY c_repid
+</select>
+
+<!--  
+<select id="commentList" parameterType="String" resultType="com.petstle.domain.CommentVo">
+
+SELECT * FROM COMMENT WHERE c_repid = order by #{c_repid}
+
+</select>
+-->
+
+
+  <insert id="CommentInsert" parameterType="com.petstle.domain.CommentVo">
+	INSERT INTO
+	COMMENT (cno,  c_repid, content, writerid, c_udate)
+	VALUES(#{cno}, #{c_repid} ,#{content} ,#{writerid}, #{c_udate})
+</insert>
+
+
+
+<select id= "CommentUpdate" resultType="com.petstle.domain.CommentVo" parameterType="Integer">
+  	Update COMMENT SET COMTENT = #{content}
+  	where CNO= #{cno}
+</select>
+<!--  <select id="detailComment" resultType="com.petstle.domain.CommnetVo" parameterType="int">
+		SELECT * FROM CommentVo WHERE cno=#{cno}
+</select>-->
+
+<delete id ="CommentDelete" parameterType="Integer">
+	DELETE FROM COMMENT WHERE CNO = #{cno}
+</delete>
+</mapper>

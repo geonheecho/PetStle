@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petstle.mapper.PetAttributeMapper">
+	<select id="petGender" resultType="com.petstle.domain.PetAttribute">
+		SELECT genid id, gender value, charge FROM pet_gender
+	</select>
+	<select id="petNeutralization" resultType="com.petstle.domain.PetAttribute">
+		SELECT neuid id, neutralization value, charge FROM pet_neutralization
+	</select>
+	<select id="petBreed" resultType="com.petstle.domain.PetAttribute">
+		SELECT brdid id, breed value, charge FROM pet_breed
+	</select>
+	<select id="petBowel" resultType="com.petstle.domain.PetAttribute">
+		SELECT bowid id, bowel value, charge FROM pet_bowel
+	</select>
+	<select id="petSeparation" resultType="com.petstle.domain.PetAttribute">
+		SELECT sepid id, separation value, charge FROM pet_separation
+	</select>
+	<select id="petHandicap" resultType="com.petstle.domain.PetAttribute">
+		SELECT hanid id, handicap value, charge FROM pet_handicap
+	</select>
+	<select id="petAggrtomen" resultType="com.petstle.domain.PetAttribute">
+		SELECT atmid id, aggression value, charge FROM pet_aggrtomen
+	</select>
+	<select id="petAggrtopet" resultType="com.petstle.domain.PetAttribute">
+		SELECT atpid id, aggression value, charge FROM pet_aggrtopet
+	</select>
+</mapper>

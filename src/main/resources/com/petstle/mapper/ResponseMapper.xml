@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petstle.mapper.ResponseMapper">
+	<select id="listResponseOnRequest" resultType="com.petstle.domain.Response" parameterType="String">
+		SELECT * FROM view_response_on_request WHERE f_req = #{reqid}
+	</select>
+	
+	<parameterMap id="newmap" type="com.petstle.domain.Response">
+		<parameter property="f_req" mode="IN" jdbcType="CHAR" javaType="String"/>
+		<parameter property="f_susr" mode="IN" jdbcType="CHAR" javaType="String"/>
+		<parameter property="resid" mode="OUT" jdbcType="CHAR" javaType="String"/>
+	</parameterMap>
+	<insert id="newResponse" statementType="CALLABLE" parameterMap="newmap">
+		{CALL proc_response_new(?,?,?)}
+	</insert>
+	
+	<parameterMap id="selmap" type="com.petstle.domain.Response">
+		<parameter property="resid" mode="IN" jdbcType="CHAR" javaType="String"/>
+		<parameter property="result" mode="OUT" jdbcType="TINYINT" javaType="String"/>
+	</parameterMap>
+	<insert id="selectResponse" statementType="CALLABLE" parameterMap="selmap">
+		{CALL proc_request_response(?,?)}
+	</insert>
+	
+	<delete id="deleteResponse" statementType="CALLABLE" parameterType="String">
+		{CALL proc_response_delete(#{resid})}
+	</delete>
+</mapper>

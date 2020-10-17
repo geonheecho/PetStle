@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.petstle.mapper.AttributeMapper">
+	<select id="userDistrict" resultType="com.petstle.domain.Attribute">
+		SELECT udsid id, district value FROM user_district
+	</select>
+	<select id="userType" resultType="com.petstle.domain.Attribute">
+		SELECT utpid id, usertype value FROM user_type
+	</select>
+	<select id="reportStatus" resultType="com.petstle.domain.Attribute">
+		SELECT rstid id, rep_status value FROM rep_status
+	</select>
+</mapper>
